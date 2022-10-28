@@ -44,7 +44,7 @@ public class InsertFoodData extends HttpServlet {
 	
 	UsersFooddataTry seleFooddata=new  UsersFooddataTry(dataeOfInsertion, userName, userId, foodGroup, foodName, mealtype, serving, netCalorieIn);
       back.insertFoodData(seleFooddata);
-	  RequestDispatcher dispatcher = request.getRequestDispatcher("/view");
+	  RequestDispatcher dispatcher = request.getRequestDispatcher("/User_Details");
 	    dispatcher.forward(request, response);
 	
 	}

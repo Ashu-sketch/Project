@@ -24,24 +24,16 @@ public class DisplayFoodData extends HttpServlet {
         this.back=new BackendClass();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int particularUserId= Integer.parseInt(request.getParameter("id"));
-		Date eachDayFoodDataDate=Date.valueOf(request.getParameter("eachDayFoodDataDate"));
-			
-			
-			HttpSession session=request.getSession();
+		Date eachDayFoodDataDate=Date.valueOf(request.getParameter("eachDayFoodDataDate"));	
+		
+		request.setAttribute("particularUserId", particularUserId); request.setAttribute("eachDayFoodDataDate", eachDayFoodDataDate);
+		
 			 List<UsersFooddataTry> userFoodData= back.getInsertedFoodDataFromDB(particularUserId, eachDayFoodDataDate);
-			session.setAttribute("userFoodDataWhichisShown", userFoodData);
-//			RequestDispatcher dispatcher = request.getRequestDispatcher("view");
-//		    dispatcher.forward(request, response);
-		
-			request.getRequestDispatcher("/DisplayuserActivityData").include(request, response);
-		 
+			request.setAttribute("userFoodDataWhichisShown", userFoodData);
+			request.getRequestDispatcher("/DisplayuserActivityData").include(request, response);		 
 	}
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 

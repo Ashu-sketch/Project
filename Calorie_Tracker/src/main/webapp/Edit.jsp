@@ -28,7 +28,7 @@
                 <div class="container">
                     <div class="logo">
                         <a href="#">
-                            <img src="assets/img/logo.png">
+                            
                         </a>
                     </div>
                 </div>
@@ -90,7 +90,6 @@ function testInput(event) {
 	   var pattern = new RegExp(/[a-zåäö ]/i);
 	   return pattern.test(value);
 	}
-
 	$('#name').bind('keypress', testInput);
 
 </script>

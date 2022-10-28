@@ -20,42 +20,39 @@
         rel="stylesheet">
     <link href="assets/css/global.css" rel="stylesheet">
 </head>
-
 <body>
     <div>
         <header class="header">
             <div class="container">
                 <div class="logo">
-                    <a href="#">
-                        <img src="assets/img/logo.png">
-                    </a>
+                    <div>
+                       <a class="btn-primary" href="UserList.jsp"><-</a></div>
                 </div>
             </div>
         </header>
         <div class="mid-container">
             <div class="container">
                 <div class="title-row">
-                    <h1 class="title"><c:out value='${userNameToBeEnterd}' /></h1>
+                    <h1 class="title"><c:out value='${user.name}' /></h1>                 
                     <div class="title-row-right">
-                        <button class="btn-primary" data-toggle="modal" data-target="#addDataModal">Add Data</button>
+                       <button class="btn-primary" data-toggle="modal" data-target="#addDataModal">Add Data</button>                        
                     </div>
                 </div>
                 <div class="view-calorie-data">
                     <div class="view-calorie-data-date-input">
-                        <div class="date-input">
-                            <input type="date" placeholder="">
-                        </div>
-                        <div class="show-selected-date">
-                            Date : - 6/27/2022
+                         <a class="btn-secondary" href="view?id=<c:out value='${user.id}' />" >view </a> 
+                                                  
+                        <div class="show-selected-date">                           
                         </div>
                     </div>
+                     <c:set var="userIdToBeEnterd" scope="application" value="${user.id}" />
+                     <c:set var="userNameToBeEnterd" scope="application" value="${user.name}" />
+     <c:set var="userIdToBeEnterd" scope="application" value="${user.id}" />
+      <c:set var="weightOfUserToBeEntered" scope="application" value="${user.weight}" />
                     <div class="view-calorie-data-chart">
                         <div class="food-data white-card">
                             <h2>Food Data</h2>
-                            <div class="food-data-table">
-                            <form action="insertFoodCopied" method="post">
-                             <input type="hidden" name="userName" value="<c:out value='${userNameToBeEnterd}' />" readonly />
-                                <input type="hidden" name="id" value="<c:out value='${userIdToBeEnterd}' />" readonly />
+                            <div class="food-data-table">                           
                                 <table
                                     class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
                                     <thead>
@@ -68,86 +65,50 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <!-- iterate user take in food through jstl -->
+                                     <c:forEach items="${userFoodData}" var="userFoodData" varStatus="status">
                                         <tr>
-                                            <th scope="row">6/25/2022</th>
-                                            <td data-label="Meal Type">Fast Food</td>
-                                            <td data-label="Food Group">Lunch</td>
-                                            <td data-label="Serving">10</td>
-                                            <td data-label="Calorie In">5878</td>
+                                            <th scope="row"><c:out value="${userFoodData.dateOfSubmission}" /></th>
+                                            <td data-label="Meal Type"><c:out value="${userFoodData.mealType}" /></td>
+                                            <td data-label="Food Group"><c:out value="${userFoodData.foodGroup}" /></td>
+                                            <td data-label="Serving"><c:out value="${userFoodData.serving}" /></td>
+                                            <td data-label="Calorie In"><c:out value="${userFoodData.calorie}" /></td>
                                         </tr>
-                                         <tr>
-                                            <th scope="row">6/25/2022</th>
-                                            <td data-label="Meal Type">Fast Food</td>
-                                            <td data-label="Food Group">Lunch</td>
-                                            <td data-label="Serving">10</td>
-                                            <td data-label="Calorie In">5878</td>
-                                        </tr>                                        
-                                    </tbody>
+                                       </c:forEach>
+                                      </tbody>
                                 </table>
-                                <button type="submit" >Submit</button>
-                                </form>
                             </div>
                         </div>
                         <div class="activity-data white-card">
                             <h2>Activity Data</h2>
                             <div class="activity-data-table">
-                            <form>
-                                <table
+                             <table
                                     class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
                                     <thead>
                                         <tr>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">MET Value</th>
+                                            <th scope="col">User Activity</th>
+                                            <th scope="col">calorie Out</th>                                       
                                             <th scope="col">Duration</th>
-                                            <th scope="col">Calorie Out</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <!-- iterate user activity data of all the dates through jstl -->
+                                         <c:forEach items="${useractivityData}" var="usseractivityData" varStatus="status">
                                         <tr>
-                                            <th scope="row">6/26/2022</th>
-                                            <td data-label="Name">Bicycling</td>
-                                            <td data-label="Description">Here Activity Description</td>
-                                            <td data-label="MET Value">14.0</td>
-                                            <td data-label="Duration">30 min.</td>
-                                            <td data-label="Calorie Out">10.2</td>
+                                            <th scope="row"><c:out value="${usseractivityData.dateOfSubmission}" /></th>                                            
+                                            <td data-label="Activity"><c:out value="${usseractivityData.activity}" /></td>
+                                            <td data-label="calorie Out"><c:out value="${usseractivityData.metvalue}" /></td>
+                                            <td data-label="Duration"><c:out value="${usseractivityData.duration}" /></td>                                           
                                         </tr>
-                                        <tr>
-                                            <th scope="row">6/27/2022</th>
-                                            <td data-label="Name">Running</td>
-                                            <td data-label="Description">Here Activity Description</td>
-                                            <td data-label="MET Value">19.0</td>
-                                            <td data-label="Duration">20 min.</td>
-                                            <td data-label="Calorie Out">25.4</td>
-                                        </tr>
-                                    </tbody>
+                                    </c:forEach>
+                             </tbody>
                                 </table>
-                                <button type="submit">Submit</button>
-                                </form>
                             </div>
                         </div>
                         <div class="net-calorie-data white-card">
-                            <h2>Net Calorie</h2>
-                            <div class="net-calorie-table">
-                                <div class="net-calorie-row">
-                                    <strong>BMR: </strong>
-                                    <span>-1800</span>
-                                </div>
-                               
-                                <div class="net-calorie-row">
-                                    <strong>Food: </strong>
-                                    <span>+1800</span>
-                                </div>
-                                <div class="net-calorie-row">
-                                    <strong>Activity: </strong>
-                                    <span>-2000</span>
-                                </div>
-                                <div class="net-calorie-row net-calorie-totl">
-                                    <strong>Net Calorie:</strong>
-                                    <span>-1800</span>
-                                </div>
-                            </div>
+                           </div>
                         </div>
                     </div>
                 </div>
@@ -158,8 +119,7 @@
                 <p>2022 LMD Consulting, LLC , All Rights Reserved</p>
             </div>
         </footer>
-    </div>
-     <!-- Modal Box Start -->
+    <!-- Modal Box Start -->
     <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add-data-modal">
@@ -178,26 +138,32 @@
                 <div class="modal-body">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="food" role="tabpanel" aria-labelledby="food-tab">
+                        <form action="insertFoodCopied" method="post">
+                        <div class="input-field">
+                         <input type="hidden" name="userName" value="<c:out value='${user.name}' />" readonly />
+                                <input type="hidden" name="id" value="<c:out value='${user.id}' />" readonly />
+                        </div>
                             <div class="input-field">
                                 <label>Select Date</label>
-                                <input type="date" value="" placeholder="" name="DateOfSubmission" required>
+                                <input type="date" value="" placeholder="" name="DateOfSubmission" id="DateOfSubmission" required>
                             </div>
                             <div class="input-field">
                                 <label>Select Food Group</label>
                                 <select class="selectbox" id="foodGroup" name="foodGroup"  required>
-                                    <option>Beans</option>                                   
+                                    <option>Select Food Group</option>                                   
                                 </select>
                                  <div class="input-field">
                                 <label>Select Food Name</label>
                                 <select class="selectbox" id="foodName" name="foodName" required>
-                                    <option>Beans</option>
+                                    <option>Select Food Name</option>
                                     
                                 </select>
                             </div>
                             </div>
                             <div class="input-field">
                                 <label>Select Meal Type</label>
-                                <select class="selectbox">
+                                <select class="selectbox" name="mealType" id="mealType" required>
+                                <option>Select Meal Type</option>
                                     <option>Breakfast</option>
                                     <option>Lunch</option>
                                     <option>Dinner</option>
@@ -212,35 +178,41 @@
                             <label>Calorie You wil Consume per food</label>                  
                     <select class="selectbox" id="calorie" name="calorie">                         
                         </select>
-                        
                     </div>
                             <div class="input-field input-field-btn btn-set--center">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                <button type="reset" class="btn btn-secondary">reset</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
+                            </form>
                         </div>
                         <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+                        <form action="insertActivityDataServlet" method="post">
+                        <div class="input-field">
+                         <input type="hidden" name="userName" value="<c:out value='${user.name}' />" readonly />
+                                <input type="hidden" name="id" value="<c:out value='${user.id}' />" readonly />
+                                <input type="hidden" name="weightOfUser" value="<c:out value='${user.weight}' />" readonly />
+                        </div>
                             <div class="input-field">
                                 <label>Select Date</label>
-                                 <input type="date" value="" placeholder="" name="DateOfSubmission" required>
+                                 <input type="date" value=""  name="DateOfSubmission" id="DateOfSubmission" required>
                             </div>
                             <div class="input-field">
                                 <label>Activity Group Name</label>
                                 <select class="selectbox" id="activityGroup" name="activityGroup" required>
-                                    <option>Bicycling</option>
+                                    <option>Select Activity Group</option>
                                  
                                 </select>
                             </div>
                             <div class="input-field">
                                 <label>Activity  Name</label>
                                 <select class="selectbox" id="activityName" name="activityName" required>
-                                    <option>Bicycling</option>
+                                    <option>Select Activity Name</option>
                                  
                                 </select>
                             </div>                           
                             <div class="input-field">
                                 <label>Activity Duration</label>
-                                 <input type="number" id="duration" name="duration" placeholder="insert duration in minutes"  required>
+                                 <input type="number" id="duration" name="duration" placeholder="insert duration in minutes"  min="1" required>
                             </div>
                             <div class="input-field">
                                 <label>Met  value</label>
@@ -249,9 +221,10 @@
                                 </select>
                             </div>
                             <div class="input-field input-field-btn btn-set--center">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                <button type="reset" class="btn btn-secondary" >Reset</button>
+                                <button type="submit" class="btn btn-primary" >Save</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -285,9 +258,7 @@
                     },
                     cache: false
                 });
-
-
-                $('#foodGroup').change(function () {
+             $('#foodGroup').change(function () {
                     $('#foodName').find('option').remove();
                     $('#foodName').append('<option>Select FoodName</option>'); 
                     $('#calorie').find('option').remove();
@@ -298,7 +269,7 @@
                         operation: "food",
                         name: cname
                     };
-
+                    
                     $.ajax({
                         url: "InsertFoodDataServlet",
                         method: "GET",
@@ -375,7 +346,6 @@
                     cache: false
                 });
 
-
                 $('#activityGroup').change(function () {
                     $('#activityName').find('option').remove();
                     $('#activityName').append('<option>Select Activity Name</option>'); 
@@ -414,6 +384,7 @@
 
                     let sname = $('#activityName').val();
                     let data = {
+                    		
                         operation: "metvalue",
                         name: sname
                     };
@@ -442,6 +413,22 @@
               
             });
         </script>
-     
+        <!-- Validation  of submit date user activity and food data form  -->
+<script type="text/javascript">
+  var input = document.getElementById("DateOfSubmission");
+  var today = new Date();
+  var day = today.getDate();
 
+  // Set month to string to add leading 0
+  var mon = new String(today.getMonth()+1); //January is 0!
+  var yr = today.getFullYear();
+
+    if(mon.length < 2) { mon = "0" + mon; }
+
+    var date = new String( yr + '-' + mon + '-' + day );
+
+  input.disabled = false; 
+  input.setAttribute('max', date);
+</script>
+        
 </html>

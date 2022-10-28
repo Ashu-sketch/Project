@@ -17,8 +17,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
         <link href="assets/css/global.css" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>       
     </head>
     <body>
       <a href="list" class="btn-primary"> UserList</a>
@@ -48,7 +47,7 @@
                                     </div>
                                     <div class="input-field">
                                         <label>Height</label>
-                                        <input type="number" step="any" min="2" max="10" placeholder="insert your height in feett" value="<c:out value='${user.height}'/>" name ="height" required />
+                                        <input type="number" step="any" min="2" max="10" placeholder="insert your height in feet" value="<c:out value='${user.height}'/>" name ="height" required />
                                     </div>
                                     <div class="input-field">
                                         <label>Gender</label>
