@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+
 /**
  * Servlet implementation class trySomethingNew
  */
@@ -40,7 +41,8 @@ public class FoodDropDownServlet extends HttpServlet {
             response.getWriter().write(foodGroupList);
         }
 
-        if (op.equals("food")) {          
+        if (op.equals("food")) {
+            //int iod = Integer.parseInt(request.getParameter("id"));
             String foodg=request.getParameter("name");
             List<FoodItems> foods = back.getfoodByFoodGroupId(foodg);
             Gson json = new Gson();
@@ -50,14 +52,17 @@ public class FoodDropDownServlet extends HttpServlet {
         }
         
         if (op.equals("calorie")) {
+            //int iod = Integer.parseInt(request.getParameter("id"));
             String calorieOfFood=request.getParameter("name");
             List<FoodItems> calorieOfParticularFood = back.getCalorie(calorieOfFood);
             Gson json = new Gson();
             String foodGroupList = json.toJson(calorieOfParticularFood);
             response.setContentType("text/html");
             response.getWriter().write(foodGroupList);
-        }      
-        //ActivityDropDown Servlet Module using in Ajax in Jsp page        
+        }
+       
+        //ActivityDropDown Servlet Module using in Ajax in Jsp page
+        
         if (op.equals("activityGroup")) {
             List<ActivityGroup> agList = back.activityGroup();
             Gson json = new Gson();
@@ -67,6 +72,7 @@ public class FoodDropDownServlet extends HttpServlet {
         }
 
         if (op.equals("activity")) {
+            //int iod = Integer.parseInt(request.getParameter("id"));
             String activityG=request.getParameter("name");
             List<ActivityNames> activities = back.getActivitybyActivityG(activityG);
             Gson json = new Gson();
@@ -76,6 +82,7 @@ public class FoodDropDownServlet extends HttpServlet {
         }
         
         if (op.equals("metvalue")) {
+            //int iod = Integer.parseInt(request.getParameter("id"));
             String activityName=request.getParameter("name");
             List<ActivityNames> metvalueFromDataBase = back.getMetValue(activityName);
             Gson json = new Gson();

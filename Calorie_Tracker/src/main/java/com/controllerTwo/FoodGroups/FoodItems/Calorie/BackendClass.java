@@ -324,19 +324,64 @@ public float getUserBMRFromDB(int userId) {
 	      
 	       ResultSet rs = pst.executeQuery();
 	       if(rs.next()) {
-	    	   bmr=rs.getFloat("bmr");
-	    	   
+	    	   bmr=rs.getFloat("bmr");	   
 	       }
 	} catch (Exception e) {
 	
 	}
-	return bmr;
-	
+	return bmr;	
 }
-//public public List<UserActivityData> getUserAllPhysicalData(int userId) {
-//	
-//}
+//user calorieI and CalotrieOut data  on User_Details.jsp
+public List<UsersFooddataTry> getAllFoodDataOfUser(int userId) {
+	List<UsersFooddataTry> userFoodData = new ArrayList<>();
+	 try{
+	    	Connection connection =ConnectionClassForTry.createConnection();
 
+	       PreparedStatement pst = connection.prepareStatement("select * from userFoodData where userId=? ");
+	       pst.setInt(1, userId);
+	       ResultSet rs = pst.executeQuery();
+	      while(rs.next()){
+	      UsersFooddataTry userFoodDataFromDB = new UsersFooddataTry();
+	      userFoodDataFromDB.setDateOfSubmission(rs.getDate("dateOfSubmission"));
+	      userFoodDataFromDB.setUserName(rs.getString("userName"));
+	      userFoodDataFromDB.setFood(rs.getString("food"));
+	      userFoodDataFromDB.setFoodGroup(rs.getString("foodGroup"));
+	      userFoodDataFromDB.setMealType(rs.getString("mealType"));
+	      userFoodDataFromDB.setServing(rs.getFloat("serving"));
+	      userFoodDataFromDB.setCalorie(rs.getFloat("calorie"));				      
+	      userFoodData.add(userFoodDataFromDB);				     
+	        }
+	    }catch(SQLException e){
+	    	System.out.println("check your query"+ e);
+	        e.printStackTrace();
+	    } 
+	    return userFoodData;
+}
+//iterate the list on view page
+public List<UserActivityData> getAllActivityDataOfUser(int userId) {
+	List<UserActivityData> useractivityData = new ArrayList<>();
+	try{
+    	Connection connection =ConnectionClassForTry.createConnection();
+
+       PreparedStatement pst = connection.prepareStatement("select * from userActivity where userId=?");
+       pst.setInt(1, userId);
+      
+      ResultSet rs = pst.executeQuery();
+      while(rs.next()){
+      UserActivityData userActivityDataFromDb = new  UserActivityData();
+     userActivityDataFromDb.setDateOfSubmission(rs.getDate("dateOfSubmission"));
+     userActivityDataFromDb.setActivity(rs.getString("activity"));
+     userActivityDataFromDb.setDuration(rs.getInt("duration"));
+     userActivityDataFromDb.setMetvalue(rs.getFloat("calorieburnt"));
+    
+      useractivityData.add(userActivityDataFromDb);		     
+        }
+    }catch(SQLException e){
+    	System.out.println("check your query"+ e);
+        e.printStackTrace();
+    } 
+	return useractivityData;
+}
 
 }
 

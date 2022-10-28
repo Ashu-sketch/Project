@@ -12,7 +12,6 @@
 <%@page import="com.controllerTwo.FoodGroups.FoodItems.Calorie.*" %>
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <link rel="icon" href="<%=Common.url %>assets/img/favicon.ico" type="image/x-icon">
@@ -30,9 +29,7 @@
         <header class="header">
             <div class="container">
                 <div class="logo">
-                   
              <!-- upper header section  -->
-
                 </div>
             </div>
         </header>
@@ -40,28 +37,26 @@
             <div class="container">
                 <div class="title-row">
                      <c:if test="${user != null}">
- <input type="hidden" name="id" value="<c:out value='${user.id}' />" />
+                     
+  <input type="hidden" name="id" value="<c:out value='${userIdToBeEnterd}' />" />
   </c:if>       
-   <a class="btn-primary" href="UserList.jsp">back to The Previous page</a>
-     <h5><c:out value='${user.name}'/></h5>
- 
-     <c:set var="userNameToBeEnterd" scope="application" value="${user.name}" />
-     <c:set var="userIdToBeEnterd" scope="application" value="${user.id}" />
-      <c:set var="weightOfUserToBeEntered" scope="application" value="${user.weight}" />
-                    <div class="title-row-right">                      
-                      <a class="btn-primary" href="AddFoodData.jsp">Add Food Data</a>                     
-                     <br>
-                      <a class="btn-primary" href="AddActivityData.jsp">Add Activity  Data</a>
+   
+   <a class="btn-primary" href="User_Details?id=${userIdToBeEnterd}">back to the user Data page</a> 
+     <h5><c:out value='${userNameToBeEnterd}'/></h5>
+  
+                    <div class="title-row-right">                                           
                     </div>
                 </div> 
-                 <!-- <button class="btn-primary" data-toggle="modal" data-target="#addDataModal">Add Data</button> -->
+                  <button class="btn-primary" data-toggle="modal" data-target="#addDataModal">Add Data</button> 
                 <div class="view-calorie-data">
                     <div class="view-calorie-data-date-input">
                     <form action="displayFoodData"  method="get">                      
                         <div class="date-input">                 
-                            <input type="date" name="eachDayFoodDataDate" id="eachDayFoodDataDate" required>
+                            <input type="date" name="eachDayFoodDataDate" id="eachDayFoodDataDate" 
+                        
+                             required>
                         </div>                       
-                     <input type="hidden" name="id" value="<c:out value='${user.id}' />" />                           
+                     <input type="hidden" name="id" value="<c:out value='${userIdToBeEnterd}' />" />                           
                       <button type="submit">submit</button>
                     </form>
                     </div>
@@ -104,7 +99,6 @@
                                             <th scope="col">Date</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Calorie Out</th>
-                                            
                                             <th scope="col">Duration</th>                                           
                                         </tr>
                                     </thead>
@@ -158,7 +152,7 @@
         </footer>
     </div>
     
-  <!-- Modal Box Start -->
+   <!-- Modal Box Start -->
     <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add-data-modal">
@@ -177,16 +171,14 @@
                 <div class="modal-body">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="food" role="tabpanel" aria-labelledby="food-tab">
-                        
                         <form action="insertFoodCopied" method="post">
-                                                        <input type="hidden" name="userName" value="<c:out value='${userNameToBeEnterd}' />" readonly />
-                                                        <input type="hidden" name="id" value="<c:out value='${userIdToBeEnterd}' />" readonly />
-                                                        
-                        
-                        
+                        <div class="input-field">
+                         <input type="hidden" name="userName" value="<c:out value='${userNameToBeEnterd}' />" readonly />
+                                <input type="hidden" name="id" value="<c:out value='${userIdToBeEnterd}' />" readonly />
+                        </div>
                             <div class="input-field">
                                 <label>Select Date</label>
-                                <input type="date" value="" placeholder="" name="DateOfSubmission" required>
+                                <input type="date" value="" placeholder="" name="DateOfSubmission" id ="DateOfSubmission" required>
                             </div>
                             <div class="input-field">
                                 <label>Select Food Group</label>
@@ -203,7 +195,7 @@
                             </div>
                             <div class="input-field">
                                 <label>Select Meal Type</label>
-                                <select class="selectbox">
+                                <select class="selectbox" name="mealType" id="mealType" required>
                                     <option>Breakfast</option>
                                     <option>Lunch</option>
                                     <option>Dinner</option>
@@ -221,21 +213,26 @@
                         
                     </div>
                             <div class="input-field input-field-btn btn-set--center">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                <button type="reset" class="btn btn-secondary">reset</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+                        <form action="insertActivityDataServlet" method="post">
+                        <div class="input-field">
+                         <input type="hidden" name="userName" value="<c:out value='${userNameToBeEnterd}' />" readonly />
+                                <input type="hidden" name="id" value="<c:out value='${userIdToBeEnterd}' />" readonly />
+                                <input type="hidden" name="weightOfUser" value="<c:out value='${weightOfUserToBeEntered}' />" readonly />
+                        </div>
                             <div class="input-field">
                                 <label>Select Date</label>
-                                 <input type="date" value="" placeholder="" name="DateOfSubmission" required>
+                                 <input type="date" value="" placeholder="" name="DateOfSubmission" id="DateOfSubmission" required>
                             </div>
                             <div class="input-field">
                                 <label>Activity Group Name</label>
                                 <select class="selectbox" id="activityGroup" name="activityGroup" required>
                                     <option>Bicycling</option>
-                                 
                                 </select>
                             </div>
                             <div class="input-field">
@@ -256,9 +253,10 @@
                                 </select>
                             </div>
                             <div class="input-field input-field-btn btn-set--center">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                <button type="reset" class="btn btn-secondary" >Reset</button>
+                                <button type="submit" class="btn btn-primary" >Save</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -293,8 +291,7 @@
                     cache: false
                 });
 
-
-                $('#foodGroup').change(function () {
+                    $('#foodGroup').change(function () {
                     $('#foodName').find('option').remove();
                     $('#foodName').append('<option>Select FoodName</option>'); 
                     $('#calorie').find('option').remove();
@@ -382,8 +379,7 @@
                     cache: false
                 });
 
-
-                $('#activityGroup').change(function () {
+                    $('#activityGroup').change(function () {
                     $('#activityName').find('option').remove();
                     $('#activityName').append('<option>Select Activity Name</option>'); 
                     $('#metValue').find('option').remove();
@@ -421,6 +417,7 @@
 
                     let sname = $('#activityName').val();
                     let data = {
+                    		
                         operation: "metvalue",
                         name: sname
                     };
@@ -449,5 +446,39 @@
               
             });
         </script>
+    <script type="text/javascript">
+  var input = document.getElementById("eachDayFoodDataDate");
+  var today = new Date();
+  var day = today.getDate();
+
+  // Set month to string to add leading 0
+  var mon = new String(today.getMonth()+1); //January is 0!
+  var yr = today.getFullYear();
+
+    if(mon.length < 2) { mon = "0" + mon; }
+
+    var date = new String( yr + '-' + mon + '-' + day );
+
+  input.disabled = false; 
+  input.setAttribute('max', date);
+</script>
+
+<!-- Validation  of submit date user activity and food data form  -->
+<script type="text/javascript">
+  var input = document.getElementById("DateOfSubmission");
+  var today = new Date();
+  var day = today.getDate();
+
+  // Set month to string to add leading 0
+  var mon = new String(today.getMonth()+1); //January is 0!
+  var yr = today.getFullYear();
+
+    if(mon.length < 2) { mon = "0" + mon; }
+
+    var date = new String( yr + '-' + mon + '-' + day );
+
+  input.disabled = false; 
+  input.setAttribute('max', date);
+</script>
 
 </html>

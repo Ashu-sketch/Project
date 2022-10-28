@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.controller.bean.dao.*;
 
-
 public class UserDao  {
 	//insertion method
 	 public void  insert(User newUser)  {
@@ -31,7 +30,7 @@ public class UserDao  {
 				      }	     		
 			try {				
 				con=ConnectionClass.createConnection();
-			    String q="insert into  users (userName, weight, height, gender, age, bmr ) values(?,?, ?, ?, ?,?);";
+			    String q="insert into  users (userName, weight, height, gender, age, bmr ) values(?,?,?,?,?,?);";
 				PreparedStatement pst=con.prepareStatement(q);
 				pst.setString(1, newUser.getName());
 				pst.setFloat(2, newUser.getWeight());
@@ -111,21 +110,36 @@ public boolean deleteUser(int id)throws SQLException {
 	}
  public boolean updateUser(User user) throws SQLException {
 	        boolean rowUpdated;
-	        try (Connection con =ConnectionClass.createConnection(); 
-	        	PreparedStatement pst = con.prepareStatement("update users set userName =?,weight= ?, height =?, gender=?, age=? where userId = ?");) {
+	        
+	        float bmr;
+			   String genderCheck="Male";
+			  Date userAge= user.getAge();
+			  @SuppressWarnings("deprecation")
+			  int age=java.time.LocalDate.now().getYear()-(userAge.getYear()+1900);
+			  float userHieghtInCM=user.getHeight();
+		       if(user.getGender().equalsIgnoreCase(genderCheck)) {	    	   
+						//Men’s BMR= 66.4730+(13.7516 x weight in kg)+(5.0033 x height in cm)-(6.7550 x age in years) 
+						bmr=(float) (66.4730+(13.7516*user.getWeight())+(5.0033*(userHieghtInCM*30.48))-(6.7550 *age));				
+						}
+					else {
+						//Women’s BMR= 655.0955+(9.5634 x weight in kg)+(1.8496 x height in cm)-(4.6756 x age in years) 
+		   				   bmr=(float) (655.0955+(9.5634*user.getWeight())+(1.8496*user.getHeight())-(4.6756*age));
+					      }
+	         try (Connection con =ConnectionClass.createConnection(); 
+	        	PreparedStatement pst = con.prepareStatement("update users set userName =?,weight= ?, height =?, gender=?, age=?, bmr=? where userId = ?");) {
 	        	pst.setString(1, user.getName());
 	        	pst.setFloat(2, user.getWeight());
 	        	pst.setFloat(3, user.getHeight());
 	        	pst.setString(4, user.getGender());
 	        	pst.setDate(5, user.getAge());	
-	        	pst.setInt(6, user.getId());
+	        	pst.setInt(7, user.getId());
+	        	pst.setFloat(6, bmr);
 	            rowUpdated = pst.executeUpdate() > 0;
 	            pst.close();
 				con.close();
 	        }
 	        return rowUpdated;
 	    }	
-
 }
 
 

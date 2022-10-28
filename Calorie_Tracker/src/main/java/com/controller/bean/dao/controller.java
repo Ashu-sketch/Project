@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.controllerTwo.FoodGroups.FoodItems.Calorie.BackendClass;
+import com.controllerTwo.FoodGroups.FoodItems.Calorie.UserActivityData;
 import com.controllerTwo.FoodGroups.FoodItems.Calorie.UsersFooddataTry;
 
 @WebServlet("/")
@@ -26,7 +27,7 @@ public class controller extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {this.doGet(request, response);}
 
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {			
-		   //getServletPath() Returns the part of the  request's URL that calls the servlet
+		   
 			 String action = request.getServletPath();
 
 		        try {
@@ -45,7 +46,10 @@ public class controller extends HttpServlet {
 		                    break;		             
 		                case "/view":
 		                	viewPage(request, response);
-		                    break;		                
+		                    break;
+		                case "/User_Details":
+		                	User_Details(request, response);
+		                    break;
 		                case "/update":
 		                    updateUser(request, response);
 		                    break;
@@ -59,31 +63,33 @@ public class controller extends HttpServlet {
 		    }
 		
 private void viewPage(HttpServletRequest request, HttpServletResponse response)throws SQLException, ServletException, IOException {
-	HttpSession session=request.getSession();
-	session.getAttribute("fgList");
 	int id = Integer.parseInt(request.getParameter("id"));
     User user = logic.selectUser(id);
-
     RequestDispatcher dispatcher = request.getRequestDispatcher("view.jsp");
+      
     request.setAttribute("user", user);
     dispatcher.forward(request, response);			
 		}
 
-//User Details Action
-//private void usercalorieDetails(HttpServletRequest request, HttpServletResponse response)throws SQLException, ServletException, IOException {
-//	HttpSession session=request.getSession();
-//	session.getAttribute("fgList");
-//	int id = Integer.parseInt(request.getParameter("id"));
-//	
-//   //
-//	UsersFooddataTry userCalorieDetails = BackendClass.
-//
-//    RequestDispatcher dispatcher = request.getRequestDispatcher("view.jsp");
-//    request.setAttribute("user", user);
-//    dispatcher.forward(request, response);			
-//		}
+//  iterate all the list of both activity and fooddata of person
+private void User_Details(HttpServletRequest request, HttpServletResponse response)throws SQLException, ServletException, IOException {
+	BackendClass back=new BackendClass();
+	
+	HttpSession session=request.getSession();	
+	int id = Integer.parseInt(request.getParameter("id"));
+    User user = logic.selectUser(id);
+    
+    List<UsersFooddataTry> userFoodData= back.getAllFoodDataOfUser(id);
+	 session.setAttribute("userFoodData",userFoodData);
+  
+    List<UserActivityData> useractivityData= back.getAllActivityDataOfUser(id);
+	 session.setAttribute("useractivityData",useractivityData);
+    RequestDispatcher dispatcher = request.getRequestDispatcher("User_Data.jsp");
+   
+    request.setAttribute("user", user);
+    dispatcher.forward(request, response);			
+		}
 
-		//Methods of different actions in the project
 		private void userlist(HttpServletRequest request, HttpServletResponse response)  throws SQLException, ServletException, IOException {
 		    HttpSession session=request.getSession();
 		    List<User> userlist= logic.getUsers();
@@ -120,7 +126,7 @@ private void viewPage(HttpServletRequest request, HttpServletResponse response)t
 		}
 		private void insertUser(HttpServletRequest request, HttpServletResponse response)  throws SQLException, ServletException, IOException {
 			
-			    //getting user data from the signup form
+			    //getting user data from the sign up form
 			    String name=request.getParameter("name");
 				float weight=Float.parseFloat(request.getParameter("weight"));
 		        float height=Float.parseFloat(request.getParameter("height"));
@@ -134,11 +140,7 @@ private void viewPage(HttpServletRequest request, HttpServletResponse response)t
 		}
 		private void showNewForm(HttpServletRequest request, HttpServletResponse response)  throws SQLException, ServletException, IOException {
 			 RequestDispatcher dispatcher = request.getRequestDispatcher("SignUp.jsp");
-		        dispatcher.forward(request, response);
-			
-		}
-		
-		
-
+		        dispatcher.forward(request, response);			
+		}		
 }
 

@@ -24,8 +24,7 @@ public class InsertActivityDataServlet extends HttpServlet {
         this.back=new BackendClass();
     }
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     doGet(request, response);
-     
+     doGet(request, response);    
      Date dataeOfInsertion=Date.valueOf(request.getParameter("DateOfSubmission"));
  	int userId= Integer.parseInt(request.getParameter("id")) ;
  	String userName=request.getParameter("userName");
@@ -36,12 +35,10 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
  	int duration=Integer.parseInt(request.getParameter("duration"));
  	float calorieBurnAsPerActivity=metValue*weightOfUser*(duration/60);
  	
- 	System.out.println(calorieBurnAsPerActivity);
- 	
- 	UserActivityData selectedActivityData=new  UserActivityData(dataeOfInsertion, userName, userId, activityGroup, activityNameactivityName, duration, calorieBurnAsPerActivity);
- 	
+ 	System.out.println(calorieBurnAsPerActivity); 	
+ 	UserActivityData selectedActivityData=new  UserActivityData(dataeOfInsertion, userName, userId, activityGroup, activityNameactivityName, duration, calorieBurnAsPerActivity); 	
  	back.insertActivityData(selectedActivityData);
- 	RequestDispatcher dispatcher = request.getRequestDispatcher("/view");
+ 	RequestDispatcher dispatcher = request.getRequestDispatcher("/User_Details");
     dispatcher.forward(request, response);
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

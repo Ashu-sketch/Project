@@ -9,7 +9,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="<%=Common.url%>assets/img/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Calorie Tracker Coding Assignment - User List</title>
@@ -60,8 +59,8 @@
                                 <td data-label="Action">
                                 <div class="btn-set">
                                <a class="btn-secondary"  href="delete?id=<c:out value='${user.id}' />">Delete</a>
-                               <a class="btn-secondary"  href="edit?id=<c:out value='${user.id}' />">Edit</a>
-                               <a class="btn-secondary" href="view?id=<c:out value='${user.id}' />" >view </a>                               
+                               <a class="btn-secondary"  href="edit?id=<c:out value='${user.id}' />">Edit</a>                                                          
+                               <a class="btn-secondary" href="User_Details?id=<c:out value='${user.id}' />" >User Data </a>                                                          
                            </div>
                                 </td>
                             </tr>

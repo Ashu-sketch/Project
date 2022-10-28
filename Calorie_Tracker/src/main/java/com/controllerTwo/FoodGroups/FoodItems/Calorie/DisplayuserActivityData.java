@@ -19,28 +19,22 @@ import javax.servlet.http.HttpSession;
 public class DisplayuserActivityData extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	BackendClass back;
-
     public DisplayuserActivityData() {
         super();
        this.back=new BackendClass();
     }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int particularUserId= Integer.parseInt(request.getParameter("id"));
-		Date eahDayFoodDataDate=Date.valueOf(request.getParameter("eachDayFoodDataDate"));
-			
-			
-			HttpSession session=request.getSession();
-			 List<UserActivityData> userActivityData= back.getInsertedActivityDataFromDB(particularUserId, eahDayFoodDataDate);
-			session.setAttribute("userActivityDataWhichIssShown", userActivityData);
-//			RequestDispatcher dispatcher = request.getRequestDispatcher("view");
-//		    dispatcher.forward(request, response);
+		int particularUserId= (int) (request.getAttribute("particularUserId"));
+		Date eachDayFoodDataDate=(Date) (request.getAttribute("eachDayFoodDataDate"));
 		
-		   RequestDispatcher rs = request.getRequestDispatcher("/OneDayTotalInCalorie"); rs.include(request, response);
-
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("particularUserId", particularUserId); request.setAttribute("eachDayFoodDataDate", eachDayFoodDataDate);
+		
+		HttpSession session=request.getSession();
+			 List<UserActivityData> userActivityData= back.getInsertedActivityDataFromDB(particularUserId, eachDayFoodDataDate);
+			 request.setAttribute("userActivityDataWhichIssShown", userActivityData);
+			 RequestDispatcher rs = request.getRequestDispatcher("/OneDayTotalInCalorie"); rs.include(request, response);
+}
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
